@@ -1,0 +1,12 @@
+---
+
+nbconfig_dcim_rack_roles:
+  - name: "CoLoc Hosted"
+    slug: "coloc_host"
+    color: "cddc39"
+    description: "Colocation rack hosting third-party tenants"
+
+  - name: "Unprovisioned"
+    slug: "unprovisioned"
+    color: "c0c0c0"
+    description: "Unprovisioned rack"

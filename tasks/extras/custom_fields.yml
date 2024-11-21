@@ -1,0 +1,18 @@
+---
+
+- name: "NBConfig.Extra - Manage extra:custom_fields"
+  become: false
+  loop: "{{ nbconfig_extras_custom_fields }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_custom_field:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      content_types: "{{ item.content_types }}"
+      group_name: "{{ item.group_name }}"
+      name: "{{ item.name }}"
+      label: "{{ item.label }}"
+      type: "{{ item.type }}"
+      ui_visibility: "{{ item.ui_visibility }}"

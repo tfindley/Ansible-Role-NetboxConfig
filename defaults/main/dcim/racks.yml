@@ -1,0 +1,10 @@
+---
+
+nbconfig_dcim_racks:
+  - name: "Room1Rack1"
+    site: "test_tenant_site_1"
+    type: "4-post cabinet"
+    u_height: 42
+    width: 19
+    role: "unprovisioned"
+    tenant: "test_tenant"

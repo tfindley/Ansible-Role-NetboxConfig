@@ -1,0 +1,10 @@
+---
+
+nbconfig_dcim_device_type:
+  - manufacturer: test_manufacturer
+    model: "Test Device"
+    part_number: "TEST-Man-DEv01"
+    slug: test-man-dev01
+    is_full_depth: true
+    u_height: '2'
+    airflow: "front-to-rear"

@@ -1,0 +1,17 @@
+---
+
+# For a list of colors, see here: https://github.com/netbox-community/netbox/blob/v3.4.5/netbox/utilities/choices.py#L100-L127
+- name: "NBConfig.Extra - Manage extra:tags"
+  become: false
+  loop: "{{ nbconfig_extras_tags }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_tag:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      slug: "{{ item.slug }}"
+      description: "{{ item.description }}"
+      color: "{{ item.color | default(omit) }}"

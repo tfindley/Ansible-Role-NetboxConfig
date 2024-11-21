@@ -1,0 +1,20 @@
+---
+
+nbconfig_extras_custom_fields:
+  - name: "ssh_host_key_ecdsa"
+    label: "ECDSA Host key"
+    type: "longtext"
+    group_name: "SSH Host Keys"
+    ui_visibility: "read-only"
+    content_types:
+      - dcim.device
+      - virtualization.virtualmachine
+
+  - name: "ssh_host_key_ed25519"
+    label: "ED25519 Host key"
+    type: "longtext"
+    group_name: "SSH Host Keys"
+    ui_visibility: "read-only"
+    content_types:
+      - dcim.device
+      - virtualization.virtualmachine

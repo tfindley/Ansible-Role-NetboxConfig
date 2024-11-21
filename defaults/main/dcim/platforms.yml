@@ -1,0 +1,8 @@
+---
+
+nbconfig_dcim_platforms:
+  - name: "Test Manufacturer Devices"
+    slug: "test_man_devices"
+    manufacturer: "test_manufacturer"
+    tags:
+      - ansible_managed
