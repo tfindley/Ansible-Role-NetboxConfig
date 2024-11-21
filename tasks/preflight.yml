@@ -1,0 +1,30 @@
+---
+# tasks file for nbconfig
+
+- name: Check required information has been set
+  become: false
+  ansible.builtin.assert:
+    that:
+      - nbconfig_netbox_api is defined and nbconfig_netbox_api| length > 0
+      - nbconfig_netbox_api_key is defined and nbconfig_netbox_api_key | length > 0
+
+- name: Check that you can connect to NetBox
+  # become: false
+  ansible.builtin.uri:
+    url: "{{ nbconfig_netbox_api }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+
+- name: Test NetBox API Key
+  # become: false
+  ansible.builtin.uri:
+    url: "{{ nbconfig_netbox_api }}/api/"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    method: GET
+    return_content: true
+    headers:
+      Authorization: Token {{ nbconfig_netbox_api_key }}
+      Accept: application/json
+  register: api_check
+  failed_when:
+    - "'Invalid token' in api_check.content"
+    - "'Failed to establish connection to Netbox API' in api_check.content"

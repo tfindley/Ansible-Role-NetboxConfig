@@ -1,0 +1,6 @@
+---
+
+nbconfig_tenancy_contacts:
+  - name: 'Tristan Findley'
+    title: 'Automation Engineer'
+    email: "tristan@domain.tld"

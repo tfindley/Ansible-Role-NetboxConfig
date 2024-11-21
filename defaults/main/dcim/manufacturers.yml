@@ -1,0 +1,7 @@
+---
+
+nbconfig_dcim_manufacturers:
+  - name: "Test Manufacturer"
+    slug: "test_manufacturer"
+    tags:
+      - ansible_managed

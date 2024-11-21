@@ -1,0 +1,9 @@
+---
+
+nbconfig_tenancy_tenants:
+  - name: 'Test Tenant'
+    slug: test-tenant
+    tenant_group: test_tenant_group
+    description: "Test Tenant as demo data"
+    tags:
+      - ansible_managed

@@ -1,0 +1,19 @@
+---
+# ------
+# Cluster Management: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_cluster_type_module.html
+
+- name: "NBConfig.Virtualization - Manage virtualization:cluster_types"
+  become: false
+  loop: "{{ nbconfig_virtualization_cluster_types }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_cluster_type:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      slug: "{{ item.slug }}"
+      description: "{{ item.description }}"
+      tags: "{{ item.tags }}"
+    state: present

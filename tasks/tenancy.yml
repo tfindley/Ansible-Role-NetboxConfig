@@ -1,0 +1,44 @@
+---
+
+- name: "NBConfig.Tenancy - Manage tenancy:tenants"
+  become: false
+  loop: "{{ nbconfig_tenancy_tenants }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_tenant:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      slug: "{{ item.slug }}"
+      tenant_group: "{{ item.tenant_group | default(omit) }}"
+      description: "{{ item.description | default(omit) }}"
+      comments: "{{ item.comments | default(omit) }}"
+      tags: "{{ item.tags | default(omit) }}"
+      custom_fields:
+        center_code: "{{ item.center_code }}"
+    state: present
+
+# ------
+# Contacts: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_contact_module.html
+
+- name: "NBConfig.Tenancy - Manage tenancy:contacts"
+  become: false
+  loop: "{{ nbconfig_tenancy_contacts }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_contact:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      title: "{{ item.title }}"
+      phone: "{{ item.phone | default(omit) }}"
+      email: "{{ item.email }}"
+      tags:
+        - ansible_managed
+      custom_fields:
+        center_code: "{{ item.center_code | default(omit) }}"
+    state: present
