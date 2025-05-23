@@ -1,0 +1,24 @@
+---
+
+# ------
+# Contexts: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_config_context_module.html
+
+- name: "NBConfig.Extra - Manage extra:config_contexts"
+  become: false
+  loop: "{{ nbconfig_extras_config_contexts }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_config_context:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      description: "{{ item.description | default(omit) }}"
+      data: "{{ item.data }}"
+      is_active: "{{ item.is_active | default(true) }}"
+      platforms: "{{ item.platforms | default(omit) }}"
+      tenants: "{{ item.tenants | default(omit) }}"
+      tags: "{{ item.tags | default(omit) }}"
+      weight: "{{ item.weight | default(1000) }}"
+    state: present

@@ -1,0 +1,8 @@
+---
+
+nbconfig_dcim_roles:
+  - name: "Virtual Machine"
+    slug: "vm"
+    color: 'ffc107'
+    tags:
+      - ansible_managed

@@ -1,0 +1,6 @@
+---
+# defaults file for nbconfig
+
+nbconfig_netbox_api:
+nbconfig_netbox_api_key:
+nbconfig_netbox_validcert: true

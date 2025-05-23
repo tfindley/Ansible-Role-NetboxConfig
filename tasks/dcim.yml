@@ -1,0 +1,116 @@
+---
+# ------
+# Rack Management: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_rack_module.html
+
+- name: "NBConfig.DCIM - Manage dcim:manufactures"
+  become: false
+  loop: "{{ nbconfig_dcim_manufacturers }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_manufacturer:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      slug: "{{ item.slug }}"
+      tags: "{{ item.tags }}"
+    state: present
+
+- name: "NBConfig.DCIM - Manage dcim:rack_roles"
+  become: false
+  loop: "{{ nbconfig_dcim_rack_roles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_rack_role:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      color: "{{ item.color }}"
+      slug: "{{ item.slug }}"
+      description: "{{ item.description | default(omit) }}"
+      tags:
+        - ansible_managed
+    state: present
+
+- name: "NBConfig.DCIM - Manage dcim:racks"
+  become: false
+  loop: "{{ nbconfig_dcim_racks }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_rack:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      site: "{{ item.site }}"
+      type: "{{ item.type }}"
+      u_height: "{{ item.u_height }}"
+      width: "{{ item.width }}"
+      tenant: "{{ item.tenant | default(omit) }}"
+      rack_role: "{{ item.role }}"
+      tags:
+        - ansible_managed
+    state: present
+
+# ------
+# Device Management: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_device_type_module.html
+
+- name: "NBConfig.DCIM - Manage dcim:device_type"
+  become: false
+  loop: "{{ nbconfig_dcim_device_type }}"
+  loop_control:
+    label: "{{ item.slug }}"
+  netbox.netbox.netbox_device_type:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      slug: '{{ item.slug }}'
+      model: '{{ item.model }}'
+      manufacturer: "{{ item.manufacturer }}"
+      part_number: "{{ item.part_number | default(omit) }}"
+      u_height: "{{ item.u_height }}"
+      is_full_depth: "{{ item.is_full_depth | bool }}"
+      airflow: "{{ item.airflow | default(omit) }}"
+    state: present
+
+# - name: Create platforms
+#   loop: "{{ nbconfig_dcim_platforms }}"
+#     - { name: "Rocky Linux 8", slug: "linux_rocky_8", manufacturer: "rocky_linux", tags: [ansible_managed] }
+#     - { name: "Rocky Linux 9", slug: "linux_rocky_9", manufacturer: "rocky_linux", tags: [ansible_managed] }
+#     - { name: "Ubuntu 20.04 LTS", slug: "linux_ubuntu_20_04", manufacturer: "canonical", tags: [ansible_managed] }
+#     - { name: "Ubuntu 22.04 LTS", slug: "linux_ubuntu_22_04", manufacturer: "canonical", tags: [ansible_managed] }
+#     - { name: "Ubuntu 24.04 LTS", slug: "linux_ubuntu_24_04", manufacturer: "canonical", tags: [ansible_managed] }
+#   netbox.netbox.netbox_platform:
+#     netbox_url: "{{ nbconfig_netbox_api }}"
+#     netbox_token: "{{ nbconfig_netbox_api_key }}"
+#     validate_certs: "{{ nbconfig_netbox_validcert }}"
+#     data:
+#       name: "{{ item.name }}"
+#       slug: "{{ item.slug }}"
+#       manufacturer: "{{ item.manufacturer }}"
+#       tags: "{{ item.tags }}"
+#     state: present
+
+# ------
+# Device roles: https://docs.ansible.com/ansible/latest/collections/netbox/netbox/netbox_device_role_module.html
+
+- name: "NBConfig.DCIM - Manage dcim:device_roles"
+  become: false
+  loop: "{{ nbconfig_dcim_roles }}"
+  loop_control:
+    label: "{{ item.name }}"
+  netbox.netbox.netbox_device_role:
+    netbox_url: "{{ nbconfig_netbox_api }}"
+    netbox_token: "{{ nbconfig_netbox_api_key }}"
+    validate_certs: "{{ nbconfig_netbox_validcert }}"
+    data:
+      name: "{{ item.name }}"
+      slug: "{{ item.slug }}"
+      color: "{{ item.color }}"
+      tags: "{{ item.tags }}"
+    state: present
